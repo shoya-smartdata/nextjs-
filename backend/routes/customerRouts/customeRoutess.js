@@ -7,7 +7,7 @@ const {
   updateCustomer,
   deleteCustomer
 } = require('../../controllers/customerController/customerController');
-const { protect, authorize } = require('../middleware/auth');
+const { protect, authorize } = require('../../middleware/protected');
 
 CustomerRouter
   .route('/')

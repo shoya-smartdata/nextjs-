@@ -3,6 +3,8 @@ const express = require('express');
 const connectDB = require('./db/database');
 const authRoutes = require('./routes/AuthRoutes/authRoutes');
 const CustomerRouter = require('./routes/customerRouts/customeRoutess');
+const leadRoute = require('./routes/LeadsRoutes/leadRoutes');
+const adminRouter = require('./routes/adminRoutes/adminRoutes');
 
 const app = express();
 
@@ -11,7 +13,10 @@ connectDB();
 
 app.use(express.json());
 app.use('/api/auth', authRoutes);
+
 app.use('/api/customer', CustomerRouter);
+app.use('/api/lead', leadRoute);
+app.use('/api/admin', adminRouter);
 
 // Protected Route Example
 app.get('/api/protected', (req, res) => {
