@@ -5,7 +5,13 @@ import tailwindcss from '@tailwindcss/vite'
 // https://vite.dev/config/
 export default defineConfig({
   plugins: [react(),
-    tailwindcss()
+    tailwindcss(),
+    
   ],
+  resolve: {
+    alias: {
+      '@heroicons/react': '/node_modules/@heroicons/react/24/solid'
+    }
+  }
 
 })
