@@ -1,0 +1,26 @@
+//all file  which comes under girignore file like node_modules and more.
+
+*node_modules
+*/.env
+*/.env.local
+*/.env.development.local
+*/.env.test.local
+*/.env.production.local
+*/.cache
+*/.dist
+*/.vscode
+*/.DS_Store
+*/.idea
+*/.vscode
+*/.env.local
+*/.env.development.local
+*/.env.test.local
+*/.env.production.local
+*/.env.development
+*/.env.test
+*/.env.production
+*/.env.staging
+*/.env.staging.local
+*/.env.local
+*/.env.staging.local
+*/.env.staging
