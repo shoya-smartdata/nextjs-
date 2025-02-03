@@ -24,8 +24,10 @@ const Login = () => {
       localStorage.setItem("token", res?.token); // Store the token in local storage
 
       // Ensure the response contains the token as expected
-      if (res) {
+      if (res.token) {
+     
         navigate("/dashboard"); // Redirect to the dashboard
+
       } else {
         setError("Invalid response from server.");
       }
