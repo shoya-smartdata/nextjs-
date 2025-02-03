@@ -5,9 +5,10 @@ const authRoutes = require('./routes/AuthRoutes/authRoutes');
 const CustomerRouter = require('./routes/customerRouts/customeRoutess');
 const leadRoute = require('./routes/LeadsRoutes/leadRoutes');
 const adminRouter = require('./routes/adminRoutes/adminRoutes');
+const cors = require('cors');
 
 const app = express();
-
+app.use(cors());
 // Connect Database
 connectDB();
 
