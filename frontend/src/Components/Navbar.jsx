@@ -1,9 +1,27 @@
-import { Fragment } from "react";
+import { Fragment, useState, useEffect } from "react";
 import { Menu, Transition } from "@headlessui/react";
 import { FaBars, FaTimes, FaUserCircle } from "react-icons/fa";
-import { NavLink } from "react-router-dom";
+import { NavLink, useNavigate } from "react-router-dom";
+import authService from "../services/authService";
 
-const Navbar = ({ token }) => {
+const Navbar = () => {
+  const [token, setToken] = useState(null);
+
+  // Check for token in localStorage on mount
+  useEffect(() => {
+    const storedToken = localStorage.getItem("token");
+    if (storedToken) {
+      setToken(storedToken);
+    }
+  }, []);
+
+  const nevigate = useNavigate();
+
+  // Function to handle logout
+  const handleLogout = async() => {
+    await authService.logout(nevigate); // Call the logout function from authService
+  };
+
   return (
     <nav className="bg-blue-600 text-white shadow-lg">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
@@ -18,7 +36,8 @@ const Navbar = ({ token }) => {
             <NavLink to="/" className="hover:text-gray-200">Home</NavLink>
             <NavLink to="/aboutus" className="hover:text-gray-200">About</NavLink>
             <NavLink to="/contact" className="hover:text-gray-200">Contact</NavLink>
-            {token ? (
+            
+            {token ? ( // If the user is logged in (has a token)
               <>
                 <NavLink to="/dashboard" className="hover:text-gray-200">Dashboard</NavLink>
                 <Menu as="div" className="relative">
@@ -47,10 +66,7 @@ const Navbar = ({ token }) => {
                         {({ active }) => (
                           <button
                             className={`block w-full text-left px-4 py-2 ${active ? "bg-gray-100" : ""}`}
-                            onClick={() => {
-                              localStorage.removeItem("token");
-                              window.location.reload();
-                            }}
+                            onClick={handleLogout} // Calling the logout function
                           >
                             Logout
                           </button>
@@ -60,7 +76,7 @@ const Navbar = ({ token }) => {
                   </Transition>
                 </Menu>
               </>
-            ) : (
+            ) : ( // If the user is not logged in
               <NavLink to="/login" className="hover:text-gray-200">Login</NavLink>
             )}
           </div>

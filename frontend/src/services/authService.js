@@ -1,5 +1,5 @@
-// src/services/auth.service.js
 import axios from 'axios';
+import { useNavigate } from 'react-router-dom';
 
 const API_URL = 'http://localhost:3030/api/auth'; // Update with your backend API URL
 
@@ -13,11 +13,18 @@ const api = axios.create({
 // Request interceptor
 api.interceptors.request.use(
   (config) => {
+<<<<<<< HEAD
     // Add authorization token here if needed
     // const token = localStorage.getItem('token');
     // if (token) {
     //   config.headers.Authorization = `Bearer ${token}`; 
     // }
+=======
+    const token = localStorage.getItem('token');
+    if (token) {
+      config.headers.Authorization = `Bearer ${token}`;
+    }
+>>>>>>> 9ae2a195169b721c0cfcff65917a6dd5596d83d8
     return config;
   },
   (error) => {
@@ -47,11 +54,20 @@ const authService = {
   },
 
   // Login user
-  async login(credentials) {
+  async login(credentials, nevigate) {
     try {
       const response = await api.post('/login', credentials);
-      return response.data;
-      
+
+      // Store the token in localStorage
+      localStorage.setItem('token', response?.data?.token);
+
+      // After login, navigate to the dashboard
+      if (response?.data?.token) {
+        nevigate('/dashboard');
+        return response.data; // Return the response data if login is successful
+      } else {
+        throw new Error('Invalid response from server');
+      }
     } catch (error) {
       if (axios.isAxiosError(error)) {
         throw new Error(
@@ -63,9 +79,11 @@ const authService = {
   },
 
   // Logout user
-  logout() {
+  logout(nevigate) {
     localStorage.removeItem('token');
     localStorage.removeItem('user');
+    // After logout, navigate to login page
+    nevigate('/login');
   },
 
   // Get current user
@@ -77,5 +95,8 @@ const authService = {
 };
 
 export default authService;
+<<<<<<< HEAD
 
 
+=======
+>>>>>>> 9ae2a195169b721c0cfcff65917a6dd5596d83d8

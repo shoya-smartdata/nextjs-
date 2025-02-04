@@ -1,17 +1,16 @@
-import { useContext, useState } from "react";
-import { AuthContext } from "../auth/Authcontext"; // Ensure the context is set up correctly
+import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import axios from "axios";
 import { FaLock } from "react-icons/fa"; // Importing React Icon
 import { Link } from "react-router-dom"; // For the Register link
-import authService from "../services/authService";
+import authService from "../services/authService"; // Import the updated authService
 
 const Login = () => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [loading, setLoading] = useState(false); // Added loading state
   const [error, setError] = useState(""); // Added error state
-  const navigate = useNavigate();
+  const nevigate = useNavigate(); // Get the navigate function
 
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -19,13 +18,16 @@ const Login = () => {
     setError(""); // Clear any previous errors
 
     try {
-      const res = await authService.login({ email, password });
+      // Call the authService.login() method and pass navigate for redirection
+      const res = await authService.login({ email, password }, nevigate);
       console.log(res);
-      localStorage.setItem("token", res?.token); // Store the token in local storage
+
+      // Store the token in local storage
+      localStorage.setItem("token", res?.token);
 
       // Ensure the response contains the token as expected
-      if (res) {
-        navigate("/dashboard"); // Redirect to the dashboard
+      if (res.token) {
+        nevigate("/dashboard"); // Redirect to the dashboard
       } else {
         setError("Invalid response from server.");
       }
@@ -48,7 +50,7 @@ const Login = () => {
           <FaLock className="h-12 w-12 text-blue-600 mx-auto" /> {/* React Icon */}
           <h2 className="text-3xl font-semibold text-gray-700">Sign In</h2>
         </div>
-        
+
         {error && <div className="text-red-500 text-center mb-4">{error}</div>} {/* Error message */}
 
         <form onSubmit={handleSubmit}>
@@ -64,7 +66,7 @@ const Login = () => {
               required
             />
           </div>
-          
+
           <div className="mb-6">
             <label htmlFor="password" className="block text-gray-600">Password</label>
             <input
