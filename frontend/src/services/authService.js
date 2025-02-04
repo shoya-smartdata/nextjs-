@@ -16,7 +16,7 @@ api.interceptors.request.use(
     // Add authorization token here if needed
     // const token = localStorage.getItem('token');
     // if (token) {
-    //   config.headers.Authorization = `Bearer ${token}`;
+    //   config.headers.Authorization = `Bearer ${token}`; 
     // }
     return config;
   },
@@ -77,3 +77,5 @@ const authService = {
 };
 
 export default authService;
+
+
